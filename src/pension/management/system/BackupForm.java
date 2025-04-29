@@ -41,6 +41,7 @@ public class BackupForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Backup Data");
+        setBackground(new java.awt.Color(255, 255, 204));
         setLocation(new java.awt.Point(0, 0));
         setResizable(false);
 
@@ -63,73 +64,94 @@ public class BackupForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
+                .addGap(118, 118, 118)
                 .addComponent(backupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
+                .addGap(64, 64, 64)
                 .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addContainerGap(108, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(102, Short.MAX_VALUE))
+                    .addComponent(closeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(96, 96, 96))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    String location = null;
-    String filename;
+//    String location = null;
+//    String filename;
     private void backupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupBtnActionPerformed
         // TODO add your handling code here:
-        JFileChooser path = new JFileChooser();
-        path.showOpenDialog(this);
-        Process p = null;
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        try {
-            File f = path.getSelectedFile();
-            location = f.getAbsolutePath();
-             System.out.println(location);
-           location = location.replace('\\', '/');
-            filename = location + "_" + date + ".bak";
-
-            System.out.println(location);
-
-            System.out.println(filename);
-
-            String sql = "BACKUP DATABASE pension_database TO DISK = '" + filename + "'";
-            Statement statement = config.conn.createStatement();
-            int flag = statement.executeUpdate(sql);
-            
-            System.out.println(flag);
-            if (flag>=-1) {
-                JOptionPane.showMessageDialog(null, "Backup Created", "Pension Record System", JOptionPane.INFORMATION_MESSAGE);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Backup Failed", "Pension Record System", JOptionPane.ERROR_MESSAGE);
-            }
-
-//            Runtime run = Runtime.getRuntime();
-//            p = run.exec("C:/Program Files/MySQL/MySQL Workbench 8.0/mysqldump.exe -uroot -padmin@123456789 --add-drop-database -B pension_database -r" + filename);
-//            int processComplete = p.waitFor();
-//           
-//            if (processComplete == 0) {
+//        JFileChooser path = new JFileChooser();
+//        path.showOpenDialog(this);
+//        Process p = null;
+//        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+//        try {
+//            File f = path.getSelectedFile();
+//            location = f.getAbsolutePath();
+//             System.out.println(location);
+//           location = location.replace('\\', '/');
+//            filename = location + "_" + date + ".bak";
+//
+//            System.out.println(location);
+//
+//            System.out.println(filename);
+//
+//            String sql = "BACKUP DATABASE pension_database TO DISK = '" + filename + "'";
+//            Statement statement = config.conn.createStatement();
+//            int flag = statement.executeUpdate(sql);
+//            
+//            System.out.println(flag);
+//            if (flag>=-1) {
 //                JOptionPane.showMessageDialog(null, "Backup Created", "Pension Record System", JOptionPane.INFORMATION_MESSAGE);
 //
 //            } else {
 //                JOptionPane.showMessageDialog(null, "Backup Failed", "Pension Record System", JOptionPane.ERROR_MESSAGE);
-//
 //            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.toString(), "Pension Record System", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
+//
+//
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(null, ex.toString(), "Pension Record System", JOptionPane.ERROR_MESSAGE);
+//        ex.printStackTrace();
+//        }
+//
+
+
+ String filename;
+    String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+    try {
+        // Define backup directory
+        String backupDir = "D:/Backups/";
+        
+        // Ensure directory exists
+        File dir = new File(backupDir);
+        if (!dir.exists()) {
+            dir.mkdirs(); // create directory if not exist
         }
 
+        filename = backupDir + "pension_database_" + date + ".bak";
+
+        String sql = "BACKUP DATABASE pension_database TO DISK = '" + filename + "'";
+        Statement statement = config.conn.createStatement();
+        int flag = statement.executeUpdate(sql);
+
+        if (flag >= -1) {
+            JOptionPane.showMessageDialog(null, "Backup Created:\n" + filename, "Pension Record System", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Backup Failed", "Pension Record System", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, ex.toString(), "Pension Record System", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
 
     }//GEN-LAST:event_backupBtnActionPerformed
 
