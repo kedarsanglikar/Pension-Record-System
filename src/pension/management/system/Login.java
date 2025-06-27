@@ -22,6 +22,7 @@ public class Login extends javax.swing.JFrame {
     Statement stmt;
     ResultSet resultSet;
     public static String user;
+    public static String userType;
 
     public Login() {
         initComponents();
@@ -168,6 +169,7 @@ public class Login extends javax.swing.JFrame {
             if (resultSet.next()) {
                 JOptionPane.showMessageDialog(null, "Login successful!", "Pension Record System", JOptionPane.INFORMATION_MESSAGE);
                 user = usernameTxt.getText().toString();
+                userType=resultSet.getString("UserType");
                 Dashboard window = new Dashboard();
                 window.setVisible(true);
                 this.dispose();

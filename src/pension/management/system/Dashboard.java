@@ -20,13 +20,19 @@ public class Dashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     String user = Login.user;
+    String userType = Login.userType;
 
     public Dashboard() {
         initComponents();
         config = new Configuration();
         pensionRecordCount.setText(totalCount());
-
-        usernameLabel.setText("WELCOME " + user + " TO");
+        System.out.println(userType);
+        if (userType.equals("User")) {
+            jButton1.setEnabled(false);
+        } else {
+            jButton1.setEnabled(true);
+        }
+        usernameLabel.setText("WELCOME " + user + "(" + userType + ")" + " TO");
     }
 
     /**
@@ -208,11 +214,11 @@ public class Dashboard extends javax.swing.JFrame {
                                         .addGap(67, 67, 67)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(182, 182, 182)
-                                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(refreshLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(refreshLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(127, 127, 127)
+                                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -314,7 +320,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void backupLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backupLabelMouseClicked
         // TODO add your handling code here:
-        bf= new BackupForm();
+        bf = new BackupForm();
         bf.setVisible(true);
 
     }//GEN-LAST:event_backupLabelMouseClicked
@@ -326,7 +332,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        app9=new APP9();
+        app9 = new APP9();
         app9.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
